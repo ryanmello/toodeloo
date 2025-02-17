@@ -15,5 +15,14 @@ func Handler(r * chi.Mux){
 		
 		// endpoint at '/account/coins'
 		router.Get("/coins", GetCoinBalance)
+		router.Get("/amount", GetCoinBalance)
+	})
+
+	r.Route("/acc", func(router chi.Router){
+		router.Use(middleware.Authorization)
+		
+		// endpoint at '/acc/coins'
+		router.Get("/coins", GetCoinBalance)
+		router.Get("/amount", GetCoinBalance)
 	})
 }
