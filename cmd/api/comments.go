@@ -15,7 +15,6 @@ type CreateCommentPayload struct {
 
 func (app *application) CreateCommentHandler(w http.ResponseWriter, r *http.Request) {
 	postIdParam := chi.URLParam(r, "postId")
-	var variable string
 	
 	postId, err := strconv.ParseInt(postIdParam, 10, 64)
 	if err != nil {
