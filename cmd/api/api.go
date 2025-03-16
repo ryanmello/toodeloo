@@ -63,7 +63,7 @@ func (app *application) mount() http.Handler {
 				
 				r.Get("/", app.getUserHandler)
 				r.Patch("/", app.updateUserHandler)
-				// r.Delete("/", app.deleteUserHandler) #trigger
+				// r.Delete("/", app.deleteUserHandler)
 
 				r.Put("/follow", app.followUserHandler)
 				r.Put("/unfollow", app.unfollowUserHandler)
