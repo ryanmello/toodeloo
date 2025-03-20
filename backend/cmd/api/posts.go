@@ -60,7 +60,7 @@ func (app *application) GetPostHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch {
 		case errors.Is(err, store.ErrNotFound):
-			app.internalServerError(w, r, err)
+			app.notFoundResponse(w, r, err)
 		default:
 			app.internalServerError(w, r, err)
 		}
