@@ -1,21 +1,32 @@
 package main
 
 import (
-	"log"
 	"net/http"
 )
 
-type server struct {
+type api struct {
 	addr string
 }
 
-func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request){
-	w.Write([]byte("Helo from the server"))
+func (a *api) getUsersHandler(w http.ResponseWriter, r *http.Request){
+	w.Write([]byte("Users...."))
+}
+
+func (a *api) createUserHandler(w http.ResponseWriter, r *http.Request){
+	w.Write([]byte("User created...."))
 }
 
 func main() {
-	s := &server{addr: ":8080"}
-	if err := http.ListenAndServe(s.addr, s); err != nil {
-		log.Fatal(err)
+	api := &api{ addr: ":8080" }
+	mux := http.NewServeMux()
+
+	srv := &http.Server{
+		Addr: api.addr,
+		Handler: mux,
 	}
+
+	mux.HandleFunc("GET /users", api.getUsersHandler)
+	mux.HandleFunc("POST /users", api.createUserHandler)
+
+	srv.ListenAndServe()
 }
