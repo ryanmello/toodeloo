@@ -17,7 +17,7 @@ type config struct {
 func (app *application) mount() *http.ServeMux {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("GET /health", app.healthCheckHandler)
+	mux.HandleFunc("GET /v1/health", app.healthCheckHandler)
 
 	return mux
 }
