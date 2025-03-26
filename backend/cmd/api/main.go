@@ -1,10 +1,20 @@
 package main
 
-import "log"
+import (
+	"log"
+	"toodeloo/internal/env"
+
+	"github.com/joho/godotenv"
+)
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+		log.Printf("Warning: .env file not found")
+	}
+
+	addr := env.GetString("ADDR", ":8080")
 	cfg := config{
-		addr: ":8080",
+		addr: addr,
 	}
 
 	app := &application{
@@ -12,6 +22,5 @@ func main() {
 	}
 
 	mux := app.mount()
-
 	log.Fatal(app.run(mux))
 }
