@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"toodeloo/internal/db"
 	"toodeloo/internal/env"
 	"toodeloo/internal/store"
 
@@ -23,7 +24,12 @@ func main() {
 		},
 	}
 
-	store := store.NewStorage(nil)
+	db, err := db.New(cfg.db.addr, cfg.db.maxOpenConns, cfg.db.maxIdleConns, cfg.db.maxIdleTime)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	store := store.NewStorage(db)
 
 	app := &application{
 		config: cfg,
