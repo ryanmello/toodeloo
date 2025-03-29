@@ -2,10 +2,10 @@ run:
 	go run ./cmd/api
 
 up:
-	goose up
+	goose -dir cmd/migrate/migrations up
 
 down:
-	goose down
+	goose -dir cmd/migrate/migrations down
 
 status:
-	goose status
+	goose -dir cmd/migrate/migrations status
