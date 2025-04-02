@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"log"
 	"net/http"
 	"strconv"
 	"toodeloo/internal/store"
@@ -79,6 +80,7 @@ func (app *application) GetPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Printf("%v", len(comments))
 	post.Comments = comments
 
 	if err := writeJSON(w, http.StatusCreated, post); err != nil {
