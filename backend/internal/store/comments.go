@@ -3,7 +3,6 @@ package store
 import (
 	"context"
 	"database/sql"
-	"log"
 )
 
 type Comment struct {
@@ -75,10 +74,6 @@ func (s *CommentStore) GetByPostId(ctx context.Context, postId int64) ([]Comment
 
 		comments = append(comments, c)
 	}
-
-	// prints 0
-	log.Printf("%v", len(comments))
-
 
 	return comments, nil
 }

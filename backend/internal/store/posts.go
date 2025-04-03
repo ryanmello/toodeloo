@@ -80,11 +80,26 @@ func (s *PostStore) GetById(ctx context.Context, id int64) (*Post, error) {
 	return &post, nil
 }
 
-func (s *PostStore) Patch(ctx context.Context, postId int64) error {
-	// post, err := s.GetById(ctx, id)
-	// if err != nil {
-	// 	return err
-	// }
+func (s *PostStore) Update(ctx context.Context, post *Post) error {
+	query := `
+		UPDATE posts
+		SET title = $1, content = $2, version = version + 1
+		WHERE id = $3 AND version = $4
+	`
+
+	res, err := s.db.ExecContext(ctx, query, post.Title, post.Content, post.Id, post.Version)
+	if err != nil {
+		return err
+	}
+
+	rows, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rows == 0 {
+		return ErrNotFound
+	}
 
 	return nil
 }
