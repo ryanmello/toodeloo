@@ -85,20 +85,25 @@ func (s *PostStore) Update(ctx context.Context, post *Post) error {
 		UPDATE posts
 		SET title = $1, content = $2, version = version + 1
 		WHERE id = $3 AND version = $4
+		RETURNING version
 	`
 
-	res, err := s.db.ExecContext(ctx, query, post.Title, post.Content, post.Id, post.Version)
-	if err != nil {
-		return err
-	}
+	err := s.db.QueryRowContext(
+		ctx,
+		query,
+		post.Title,
+		post.Content,
+		post.Id,
+		post.Version,
+	).Scan(&post.Version)
 
-	rows, err := res.RowsAffected()
 	if err != nil {
-		return err
-	}
-
-	if rows == 0 {
-		return ErrNotFound
+		switch {
+		case errors.Is(err, sql.ErrNoRows):
+			return ErrNotFound
+		default:
+			return err
+		}
 	}
 
 	return nil
