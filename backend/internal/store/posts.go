@@ -101,9 +101,9 @@ func (s *PostStore) Update(ctx context.Context, post *Post) error {
 	err := s.db.QueryRowContext(
 		ctx,
 		query,
-		post.Id,
 		post.Title,
 		post.Content,
+		post.Id,
 		post.Version,
 	).Scan(&post.Version)
 

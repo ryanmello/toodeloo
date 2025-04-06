@@ -80,6 +80,37 @@ func (s *UserStore) GetById(ctx context.Context, id int64) (*User, error) {
 
 // update user
 func (s *UserStore) Update(ctx context.Context, user *User) error {
+	query := `
+		UPDATE users
+		SET username = $1, email = $2, password = $3
+		WHERE id = $4
+	`
+
+	ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
+	defer cancel()
+
+	res, err := s.db.ExecContext(
+		ctx,
+		query,
+		user.Username,
+		user.Email,
+		user.Password,
+		user.Id,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	rows, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rows == 0 {
+		return ErrNotFound
+	}
+
 	return nil
 }
 
