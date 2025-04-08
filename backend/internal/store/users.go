@@ -53,7 +53,7 @@ func (s *UserStore) GetById(ctx context.Context, id int64) (*User, error) {
 	ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
 	defer cancel()
 
-	var user User
+	user := &User{}
 	err := s.db.QueryRowContext(
 		ctx,
 		query,
@@ -75,7 +75,7 @@ func (s *UserStore) GetById(ctx context.Context, id int64) (*User, error) {
 		}
 	}
 
-	return &user, nil
+	return user, nil
 }
 
 // update user
