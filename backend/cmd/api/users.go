@@ -97,3 +97,48 @@ func getUserFromCtx(r *http.Request) *store.User {
 	user, _ := r.Context().Value(userCtx).(*store.User)
 	return user
 }
+
+type FollowUserPayload struct {
+	FollowerId int64 `json:"followerId"`
+}
+
+// handle follow and unfollow
+func (app *application) followUserHandler(w http.ResponseWriter, r *http.Request) {
+	// get user if from param
+	// get the follower_id from request
+	// make a call to user store to create follow instance
+
+	// fetching the user we want to follow
+	// user := getUserFromCtx(r)
+	idParam := chi.URLParam(r, "userId")
+	userId, err := strconv.ParseInt(idParam, 10, 64)
+
+	if err != nil {
+		app.internalServerError(w, r, err)
+		return
+	}
+
+	var payload FollowUserPayload
+	if err := readJSON(w, r, &payload); err != nil {
+		app.badRequestResponse(w, r, err)
+		return
+	}
+
+	if err := Validate.Struct(payload); err != nil {
+		app.badRequestResponse(w, r, err)
+		return
+	}
+
+	ctx := r.Context()
+
+	app.store.Users.Follow(ctx, payload.FollowerId, userId)
+
+	if err := app.jsonResponse(w, http.StatusNoContent, userId); err != nil {
+		app.internalServerError(w, r, err)
+		return
+	}
+}
+
+func (app *application) unfollowUserHandler(w http.ResponseWriter, r *http.Request) {
+	
+}

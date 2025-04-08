@@ -118,3 +118,7 @@ func (s *UserStore) Update(ctx context.Context, user *User) error {
 func (s *UserStore) Delete(ctx context.Context, id int64) error {
 	return nil
 }
+
+func (s *UserStore) Follow(ctx context.Context, followerId int64, userId int64) error {
+	return nil
+}
