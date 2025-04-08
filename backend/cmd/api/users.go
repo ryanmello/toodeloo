@@ -131,7 +131,7 @@ func (app *application) followUserHandler(w http.ResponseWriter, r *http.Request
 
 	ctx := r.Context()
 
-	app.store.Users.Follow(ctx, payload.FollowerId, userId)
+	app.store.Followers.Follow(ctx, payload.FollowerId, userId)
 
 	if err := app.jsonResponse(w, http.StatusNoContent, userId); err != nil {
 		app.internalServerError(w, r, err)
@@ -140,5 +140,5 @@ func (app *application) followUserHandler(w http.ResponseWriter, r *http.Request
 }
 
 func (app *application) unfollowUserHandler(w http.ResponseWriter, r *http.Request) {
-	
+
 }

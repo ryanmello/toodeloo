@@ -119,6 +119,15 @@ func (s *UserStore) Delete(ctx context.Context, id int64) error {
 	return nil
 }
 
-func (s *UserStore) Follow(ctx context.Context, followerId int64, userId int64) error {
-	return nil
-}
+// func (s *UserStore) Follow(ctx context.Context, followerId int64, userId int64) error {
+// 	query = ``
+
+// 	ctx, cancel := context.WithTimeout(ctx, QueryTimeoutDuration)
+// 	defer cancel()
+
+// 	// execute the query
+// 		// create a follower object with the followerId and userId
+// 		// the created_at will be set to time.NOW()
+
+// 	return nil
+// }
