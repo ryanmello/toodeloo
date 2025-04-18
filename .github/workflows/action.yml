@@ -25,9 +25,7 @@ jobs:
         run: go version
 
       - name: Download dependencies
-        run: |
-          cd backend
-          go mod download
+        run: go mod download
 
       - name: Run Blackbird
         uses: ryanmello/blackbird@v1.0.1
