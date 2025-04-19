@@ -9,12 +9,12 @@ on:
 jobs:
   blackbird:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Change directory to backend
-        run: cd backend
 
       - name: Set up Go
         uses: actions/setup-go@v2
@@ -29,3 +29,5 @@ jobs:
 
       - name: Run Blackbird
         uses: ryanmello/blackbird@v1.0.1
+        env:
+          WORKDIR: ./backend
