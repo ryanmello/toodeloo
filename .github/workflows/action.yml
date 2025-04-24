@@ -1,0 +1,20 @@
+name: Workflow
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  blackbird:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Change directory to backend
+        run: cd backend
+
+      - name: Run Blackbird
+        uses: ryanmello/blackbird@v1.0.1
