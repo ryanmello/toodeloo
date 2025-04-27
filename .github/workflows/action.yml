@@ -1,0 +1,20 @@
+name: Fly Blackbird
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  analyze:
+    name: Fly Blackbird
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Blackbird-FL8
+      uses: ryanmello/blackbird@v1.0.1
+
