@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:17.4
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: $DATABASE_NAME
+      POSTGRES_USER: $DATABASE_USER
+      POSTGRES_PASSWORD: $DATABASE_PASSWORD
+    networks:
+      - backend
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./scripts/db_init.sql:/docker-entrypoint-initdb.d/db_init.sql
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data:
+
+networks:
+  backend:
+    driver: bridge
