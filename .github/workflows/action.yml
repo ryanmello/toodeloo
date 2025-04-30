@@ -16,5 +16,4 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Blackbird-FL8
-      uses: ryanmello/blackbird@v1.0.5
-
+      uses: ryanmello/blackbird@v1.0.6
